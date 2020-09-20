@@ -89,13 +89,13 @@ function handlebars(options) {
     : (defineTemplate, initExpr) => `${initExpr};\n${defineTemplate()}`;
 
   // Support `helpers` being singular or plural.
-  const helpers = asArrayOr(options.helpers, null);
+  const helpers = asArrayOr(options.helpers, []);
 
   return {
-    resolveId: (id) => (helpers && id === INTERNAL_INIT_ID ? id : undefined),
+    resolveId: (id) => (id === INTERNAL_INIT_ID ? id : undefined),
 
     load(id) {
-      if (!helpers || id !== INTERNAL_INIT_ID) return;
+      if (id !== INTERNAL_INIT_ID) return;
 
       let body = hbsImport;
       body += '';
